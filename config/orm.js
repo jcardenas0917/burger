@@ -1,8 +1,8 @@
-let connection = require("./connection.js");
+let connection = require("./connection");
 
-let queries = {
+let orm = {
     selectAll: function () { 
-        app.get("/", function(req, res) {
+       
             connection.query("SELECT * FROM burgers;", function(err, data) {
               if (err) {
                 return res.status(500).end();
@@ -10,9 +10,11 @@ let queries = {
           
               res.render("index", { burgers: data });
             });
-          });
+         
     },
-    insertOne: function () {app.post("/", function(req, res) {
+    insertOne: function () {
+        
+       
         connection.query("INSERT INTO burgers (burger) VALUES (?)", [req.body.burger], function(err, result) {
           if (err) {
             return res.status(500).end();
@@ -22,8 +24,9 @@ let queries = {
           res.json({ id: result.insertId });
           console.log({ id: result.insertId });
         });
-      }); },
-    updateOne: function () { app.put("/:id", function(req, res) {
+    },
+    updateOne: function () { 
+
         connection.query("UPDATE burgers SET burger = ? WHERE id = ?", [req.body.burger, req.params.id], function(err, result) {
           if (err) {
             // If an error occurred, send a generic server failure
@@ -36,8 +39,7 @@ let queries = {
           res.status(200).end();
       
         });
-      });
       },
 }
 
-module.exports = queries;
+module.exports = orm;

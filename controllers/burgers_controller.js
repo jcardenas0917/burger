@@ -1,9 +1,7 @@
 let express = require("express");
-let burger = require("../burger.js");
+let burger = require("../models/burger");
 
-module.exports = app => {
-
-    // Sets the get for the api/friends route
-    app.get("/", (req, res) => res.render("index",  ));
-      
-}
+let router = express.Router();
+app.get("/burgers", (req, res) => {});
+app.post("/burgers/create", (req, res) => {});
+app.put("/burgers/update:id", (req, res) => {});
