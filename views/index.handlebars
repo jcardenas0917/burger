@@ -1,9 +1,18 @@
 <div class="container">
 
     <div class="jumbotron">
+        <div class="row">
 
-       <img src="/assets/img/burger.png" alt="Burger" style="width:400px;height:400px;">
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-6">
+                <img src="/assets/img/burger.png" alt="Burger" style="width:400px;height:400px;">
+            </div>
+        </div>
     </div>
+
+
     <div class="row">
         <div class="col-sm-6">
             <div class="panel panel-default">
@@ -13,8 +22,8 @@
                         {{#each burgers}}
                         {{#unless devoured}}
                         <span><strong> {{this.id}} - {{this.burger_name}} </strong></span>
-                        <button type="button" id="devour" data-id="{{this.id}}"
-                            data-newDevoured="{{devour}}"><span class="fa fa-cutlery"></span></button>
+                        <button type="button" class= "btn btn-primary" id="devour" data-id="{{this.id}}" data-newDevoured="{{devour}}"><span
+                                class="fa fa-cutlery"></span></button>
                         <hr>
                         {{/unless}}
                         {{/each}}
@@ -31,7 +40,8 @@
                         {{#each burgers}}
                         {{#if devoured}}
                         <span><strong> {{this.id}} - {{this.burger_name}} </strong></span>
-                        <button class="delete-burger" id="delete" data-id="{{this.id}}"><span class="fa fa-trash"></span></button>
+                        <button class="delete-burger btn btn-danger" id="delete" data-id="{{this.id}}"><span
+                                class="fa fa-trash"></span></button>
                         <hr>
                         {{/if}}
                         {{/each}}
@@ -53,7 +63,7 @@
                         <div class="form-group">
                             <input type="text" id="newburger" name="burger">
                             <button type="submit" class="btn btn-success" id="new_burger"><span
-                                    class="fa fa-thumbs-up"></span></button>
+                                    class="fas fa-plus-circle"></span></button>
                         </div>
                     </form>
                 </panel>

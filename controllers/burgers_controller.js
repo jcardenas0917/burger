@@ -32,19 +32,20 @@ router.put("/api/burgers/:id", (req, res) => {
             res.status(200).end();
         }
     });
-    //Delete devoured burger from DB
-    router.delete("/api/burgers/:id", (req, res) => {
-        var condition = "id = " + req.params.id;
+});
+//Delete devoured burger from DB
+router.delete("/api/burgers/:id", (req, res) => {
+    let condition = "id = " + req.params.id;
 
-        cat.delete(condition, result => {
-            if (result.affectedRows == 0) {
-                // If no rows were changed, then the ID must not exist, so 404
-                return res.status(404).end();
-            } else {
-                res.status(200).end();
-            }
-        });
+    burger.delete(condition, result => {
+        if (result.affectedRows == 0) {
+            // If no rows were changed, then the ID must not exist, so 404
+            return res.status(404).end();
+        } else {
+            res.status(200).end();
+        }
     });
 });
+
 
 module.exports = router;
