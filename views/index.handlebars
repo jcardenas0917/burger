@@ -1,87 +1,65 @@
+<div class="row">
+    <div class="col-lg-1">
+    </div>
+    <div class="col-lg-10">
+        <div class="jumbotron">
+            <h1 class="display-4">Hello, world!</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
+                attention to
+                featured content or information.</p>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger
+                container.
+            </p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
     <div class="row">
-        <div class="col-lg-1">
-        </div>
-        <div class="col-lg-10">
-            <div class="jumbotron">
-                <h1 class="display-4">Hello, world!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-                    attention to
-                    featured content or information.</p>
-                <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger
-                    container.
-                </p>
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-header">
-                        Burgers
-                    </div>
-                    <ul class="list-group list-group-flush">
-
-                        {{#each burgers}}
+        <div class="col-lg-5">
+            <h2 class="header">Burgers</h2>
+            {{#each burgers}}
+            {{#unless this.devoured}}
+            <form>
+                <div class="form-group">
+                    <ul>
                         <li>
-                            <p>
-                                {{this.burger_name}}
-
-                                <button data-burgerid="{{this.id}}" class="devour">Devoured!</button>
-                            </p>
+                            <p>{{burger_name}}</p>
+                            <button class="devour" data-id="{{id}}" data-newsburger="{{devour}}">
+                                Devour
+                            </button>
                         </li>
-                        {{/each}}
                     </ul>
                 </div>
-            </div>
-            <div class="col-lg-2">
-            </div>
-            <div class="col-lg-5">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-header">
-                        Devoured
-                    </div>
-                    <ul class="list-group list-group-flush">
-
-                        
-                    </ul>
-                </div>
-            </div>
-
+            </form>
+            {{/unless}}
+            {{/each}}
         </div>
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-5">
+            <h2 class="header">Burgers Devoured</h2>
+            {{#each burgers}}
+            {{#if this.devoured}}
+            <div>
+                <ul>
+                    <li>
+                        <p>{{burger_name}}</p>
+                    </li>
+                </ul>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+
     </div>
-      <form>
-        <div class="form-group">
-             <input type="text" name="burger_name" class="form-control text-center" maxlength="50" placeholder="Enter Burger Name">
-            <button class="btn btn-ketchup btn-block my-2" id="createburger" type="submit">Add Burger</button>
-        </div>
-    </form>
-
-<script>
-      $("#createburger").on("submit", event => {
-    // Make sure to preventDefault on a submit event.
-    event.preventDefault();
-
-    // [name=plan] will find an element with a "name" attribute equal to the string "plan"
-    let newBurger = {
-      burger: $("#createburger").val()
-    };
-
-    // Send the POST request.
-    $.ajax("/api/burgers", {
-      type: "POST",
-      data: newBurger
-    }).then(
-      function() {
-        console.log("created new burger");
-        // Reload the page to get the updated list
-        location.reload();
-      }
-    );
-  });
-
-</script>
-</html>
+</div>
+<form>
+    <div class="form-group">
+        <input type="text" name="burger_name" id="burger_name" class="form-control text-center" maxlength="50"
+            placeholder="Enter Burger Name">
+        <button class="btn btn-ketchup btn-block my-2" id="new_burger" type="submit">Add Burger</button>
+    </div>
+</form>

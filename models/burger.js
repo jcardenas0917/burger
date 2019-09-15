@@ -1,26 +1,24 @@
-let orm = require("../config/orm");
 
+let orm = require("../config/orm.js");
 
-//   $(".devour").on("submit", event => {
-//     // Make sure to preventDefault on a submit event.
-//     event.preventDefault();
+let burger = {
+  all: function(cb) {
+    orm.selectAll("burgers",(res) => {
+      cb(res);
+    });
+  },
+  // The variables cols and vals are arrays.
+  create: function(cols, vals, cb) {
+    orm.insertOne("burgers", cols, vals, (res) => {
+      cb(res);
+    });
+  },
+  update: function(objColVals, condition, cb) {
+    orm.update("burgers", objColVals, condition, (res) => {
+      cb(res);
+    });
+  }
+};
 
-//     // Get the ID by finding an element with a "name" attribute equal to the string "id"
-//     let id = $("[name=id]").val().trim();
-
-//     var updatedPlan = {
-//       plan: $("#updateburger [name=plan]").val().trim()
-//     };
-
-//     // Send the PUT request.
-//     $.ajax("/api/plans/" + id, {
-//       type: "PUT",
-//       data: updatedPlan
-//     }).then(
-//       function() {
-//         console.log("updated id ", id);
-//         // Reload the page to get the updated list
-//         location.reload();
-//       }
-//     );
-//   });
+// Export the database functions for the controller (catsController.js).
+module.exports = burger;

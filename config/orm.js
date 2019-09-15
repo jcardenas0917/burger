@@ -1,45 +1,82 @@
 let connection = require("./connection");
+function printQuestionMarks(num) {
+  var arr = [];
 
-let orm = {
-    selectAll: function () { 
-       
-            connection.query("SELECT * FROM burgers;", function(err, data) {
-              if (err) {
-                return res.status(500).end();
-              }
-          
-              res.render("index", { burgers: data });
-            });
-         
-    },
-    insertOne: function () {
-        
-       
-        connection.query("INSERT INTO burgers (burger) VALUES (?)", [req.body.burger], function(err, result) {
-          if (err) {
-            return res.status(500).end();
-          }
-      
-          // Send back the ID of the new plan
-          res.json({ id: result.insertId });
-          console.log({ id: result.insertId });
-        });
-    },
-    updateOne: function () { 
+  for (var i = 0; i < num; i++) {
+    arr.push("?");
+  }
 
-        connection.query("UPDATE burgers SET burger = ? WHERE id = ?", [req.body.burger, req.params.id], function(err, result) {
-          if (err) {
-            // If an error occurred, send a generic server failure
-            return res.status(500).end();
-          }
-          else if (result.changedRows === 0) {
-            // If no rows were changed, then the ID must not exist, so 404
-            return res.status(404).end();
-          }
-          res.status(200).end();
-      
-        });
-      },
+  return arr.toString();
 }
 
-module.exports = orm;
+// Helper function to convert object key/value pairs to SQL syntax
+function objToSql(ob) {
+  var arr = [];
+
+  // loop through the keys and push the key/value as a string int arr
+  for (var key in ob) {
+    var value = ob[key];
+    // check to skip hidden properties
+    if (Object.hasOwnProperty.call(ob, key)) {
+      // if string with spaces, add quotations
+      if (typeof value === "string" && value.indexOf(" ") >= 0) {
+        value = "'" + value + "'";
+      }
+      arr.push(key + "=" + value);
+    }
+  }
+
+  // translate array of strings to a single comma-separated string
+  return arr.toString();
+}
+  let orm = {
+    selectAll: function(table,cb){
+        var queryString = "SELECT * FROM " + table + ";";
+        connection.query(queryString,(err,result) => {
+            if(err){
+                throw err
+            };
+            cb(result);
+        });
+    },
+    insertOne: function(table, cols, vals, cb) {
+      var queryString = "INSERT INTO " + table;
+  
+      queryString += " (";
+      queryString += cols.toString();
+      queryString += ") ";
+      queryString += "VALUES (";
+      queryString += printQuestionMarks(vals.length);
+      queryString += ") ";
+  
+      console.log(queryString);
+  
+      connection.query(queryString, vals,(err, result) => {
+        if (err) {
+          throw err;
+        }
+  
+        cb(result);
+      });
+    },
+    update: function(table, objColVals, condition, cb) {
+      var queryString = "UPDATE " + table;
+  
+      queryString += " SET ";
+      queryString += objToSql(objColVals);
+      queryString += " WHERE ";
+      queryString += condition;
+  
+      console.log(queryString);
+      connection.query(queryString,(err, result) => {
+        if (err) {
+          throw err;
+        }
+  
+        cb(result);
+      });
+    }
+  };
+
+// Export Orm
+module.exports = orm
