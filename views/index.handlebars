@@ -22,8 +22,10 @@
                         {{#each burgers}}
                         {{#unless devoured}}
                         <span><strong> {{this.id}} - {{this.burger_name}} </strong></span>
-                        <button type="button" class= "btn btn-primary" id="devour" data-id="{{this.id}}" data-newDevoured="{{devour}}"><span
-                                class="fa fa-cutlery"></span></button>
+                        <button type="button" class="btn btn-primary" id="devour" data-id="{{this.id}}"
+                            data-newDevoured="{{devour}}"><i class="material-icons">
+                                fastfood
+                            </i></button>
                         <hr>
                         {{/unless}}
                         {{/each}}
@@ -40,8 +42,9 @@
                         {{#each burgers}}
                         {{#if devoured}}
                         <span><strong> {{this.id}} - {{this.burger_name}} </strong></span>
-                        <button class="delete-burger btn btn-danger" id="delete" data-id="{{this.id}}"><span
-                                class="fa fa-trash"></span></button>
+                        <button class="delete-burger btn btn-danger" id="delete" data-id="{{this.id}}"><i
+                                class="material-icons">
+                                delete </i></button>
                         <hr>
                         {{/if}}
                         {{/each}}
@@ -62,8 +65,9 @@
                     <form class="create-form">
                         <div class="form-group">
                             <input type="text" id="newburger" name="burger">
-                            <button type="submit" class="btn btn-success" id="new_burger"><span
-                                    class="fas fa-plus-circle"></span></button>
+                            <button type="submit" class="btn btn-success" id="new_burger"><i class="material-icons">
+                                    add
+                                </i></button>
                         </div>
                     </form>
                 </panel>
